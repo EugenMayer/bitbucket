@@ -95,7 +95,7 @@ VOLUME ["/var/atlassian/bitbucket"]
 EXPOSE 7990 7990
 EXPOSE 7999 7999
 EXPOSE 7992 7992
-COPY imagescripts/docker-entrypoint.sh /home/bitbucket/
-COPY imagescripts/ps_opt_p_enabled_for_alpine.sh /usr/bin/ps
-ENTRYPOINT ["/sbin/tini","--","/home/bitbucket/docker-entrypoint.sh"]
+COPY bin/docker-entrypoint.sh /
+COPY bin/ps_opt_p_enabled_for_alpine.sh /usr/bin/ps
+ENTRYPOINT ["/sbin/tini","--","/docker-entrypoint.sh"]
 CMD ["bitbucket"]
