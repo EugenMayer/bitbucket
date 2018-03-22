@@ -1,7 +1,7 @@
 FROM blacklabelops/java:openjre.8
 MAINTAINER Steffen Bleul <sbl@blacklabelops.com>
 
-ARG BITBUCKET_VERSION=5.9.0
+ARG RELEASE_VERSION=5.9.0
 # permissions
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
@@ -39,9 +39,9 @@ RUN export MYSQL_DRIVER_VERSION=5.1.44 && \
     export XMLSTARLET_VERSION=1.6.1-r1              &&  \
     wget --directory-prefix=/tmp https://github.com/menski/alpine-pkg-xmlstarlet/releases/download/${XMLSTARLET_VERSION}/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
     apk add --allow-untrusted /tmp/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
-    wget -O /tmp/bitbucket.tar.gz https://www.atlassian.com/software/stash/downloads/binary/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz && \
+    wget -O /tmp/bitbucket.tar.gz https://www.atlassian.com/software/stash/downloads/binary/atlassian-bitbucket-${RELEASE_VERSION}.tar.gz && \
     tar zxf /tmp/bitbucket.tar.gz -C /tmp && \
-    mv /tmp/atlassian-bitbucket-${BITBUCKET_VERSION} /tmp/bitbucket && \
+    mv /tmp/atlassian-bitbucket-${RELEASE_VERSION} /tmp/bitbucket && \
     mkdir -p ${BITBUCKET_HOME} && \
     mkdir -p /opt && \
     mv /tmp/bitbucket /opt/bitbucket && \
