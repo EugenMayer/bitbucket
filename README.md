@@ -1,33 +1,21 @@
 # Dockerized Atlassian Bitbucket
 
-[![Circle CI](https://circleci.com/gh/blacklabelops/bitbucket.svg?style=shield)](https://circleci.com/gh/blacklabelops/bitbucket)
-[![Open Issues](https://img.shields.io/github/issues/blacklabelops/bitbucket.svg)](https://github.com/blacklabelops/bitbucket/issues) [![Stars on GitHub](https://img.shields.io/github/stars/blacklabelops/bitbucket.svg)](https://github.com/cblacklabelops/bitbucket/stargazers)
-[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/bitbucket.svg)](https://hub.docker.com/r/blacklabelops/bitbucket/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/bitbucket.svg)](https://hub.docker.com/r/blacklabelops/bitbucket/)
+This project is build by concourse.ci, see [our oss pipelines here](https://github.com/EugenMayer/concourse-our-open-pipelines)
 
-"Built for professional teams - Distributed version control system that makes it easy for you to collaborate with your team. The only collaborative Git solution that massively scales." - [[Source](https://www.atlassian.com/software/bitbucket)]
 
 ## Supported tags and respective Dockerfile links
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Bitbucket | 5.8.2 | 5.8.2, latest | [Dockerfile](https://github.com/blacklabelops/bitbucket/blob/master/Dockerfile) |
-
-## Support & Feature Requests
-
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](http://support.blacklabelops.com)
-
-Maybe no one has ever told you, but munich developers run on beer! If you like my work, share a beer!
-
-[![BeerMe](https://raw.githubusercontent.com/ikkez/Beer-Donation-Button/gh-pages/img/beer_donation_button_single.png)](https://www.paypal.me/donateblacklabelops)
+| Bitbucket | 5.8.2-latest | [see tags](https://hub.docker.com/r/eugenmayer/bitbucket/tags/) | [Dockerfile](https://github.com/blacklabelops/bitbucket/blob/master/Dockerfile) |
 
 ## Related Images
 
 You may also like:
 
-* [blacklabelops/jira](https://github.com/blacklabelops/jira): The #1 software development tool used by agile teams
-* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
-* [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
-* [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
+* [jira](https://github.com/EugenMayer/docker-image-atlassian-jira)
+* [confluence](https://github.com/EugenMayer/docker-image-atlassian-confluence)
+* [rancher catalog - corresponding catalog for confluence](https://github.com/EugenMayer/docker-rancher-extra-catalogs/tree/master/templates/confluence)
 
 # Make It Short
 
@@ -36,7 +24,7 @@ Docker-CLI:
 Just type and follow the manual installation procedure in your browser:
 
 ~~~~
-$ docker run -d -p 7990:7990 --name bitbucket blacklabelops/bitbucket
+docker-compose up
 ~~~~
 
 > Point your browser to http://yourdockerhost:7990
@@ -68,7 +56,7 @@ $ docker run -d --name bitbucket \
 	  -p 7990:7990 blacklabelops/bitbucket
 ~~~~
 
->  Starts Crowd and links it to the postgresql instances. JDBC URL: jdbc:postgresql://postgres_bitbucket/bitbucketdb
+>  Starts Bitbucket and links it to the postgresql instances. JDBC URL: jdbc:postgresql://postgres_bitbucket/bitbucketdb
 
 Thirdly, configure your Bitbucket yourself and fill it with a test license.
 
@@ -271,116 +259,12 @@ $ docker run -d --name bitbucket \
 
 > Will set the values inside the bitbucket.properties in /var/atlassian/bitbucket/bitbucket.properties
 
-# NGINX HTTP Proxy
+# Credits
 
-This is an example on running Atlassian Bitbucket behind NGINX with 2 Docker commands!
+This repo and project is based on the great work of
 
-First start Bitbucket:
+[blacklabelops/bitbucket](https://bitbucket.org/blacklabelops/bitbucket)
 
-~~~~
-$ docker run -d --name bitbucket \
-    -e "BITBUCKET_CONTEXT_PATH=/bitbucket" \
-    -e "BITBUCKET_PROXY_NAME=myhost.example.com" \
-    -e "BITBUCKET_PROXY_PORT=80" \
-    -e "BITBUCKET_PROXY_SCHEME=http" \
-    blacklabelops/bitbucket
-~~~~
-
-> Example with dockertools
-
-Then start NGINX:
-
-~~~~
-$ docker run -d \
-    -p 80:80 \
-    --name nginx \
-    --link bitbucket:bitbucket \
-    -e "SERVER1SERVER_NAME=myhost.example.com" \
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/bitbucket" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://bitbucket:7990" \
-    -e "SERVER1REVERSE_PROXY_APPLICATION1: bitbucket"
-    blacklabelops/nginx
-~~~~
-
-> Bitbucket will be available at http://myhost.example.com/bitbucket.
-
-# NGINX HTTPS Proxy
-
-This is an example on running Atlassian Bitbucket behind NGINX-HTTPS with2 Docker commands!
-
-Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [blacklabelops/nginx](https://github.com/blacklabelops/nginx)
-
-First start Bitbucket:
-
-~~~~
-$ docker run -d --name bitbucket \
-    -e "BITBUCKET_PROXY_NAME=192.168.99.100" \
-    -e "BITBUCKET_PROXY_PORT=80" \
-    -e "BITBUCKET_PROXY_SCHEME=http" \
-    blacklabelops/bitbucket
-~~~~
-
-> Example with dockertools
-
-Then start NGINX:
-
-~~~~
-$ docker run -d \
-    -p 443:443 \
-    --name nginx \
-    --link bitbucket:bitbucket \
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://bitbucket:7990" \
-    -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
-    -e "SERVER1HTTPS_ENABLED=true" \
-    -e "SERVER1HTTP_ENABLED=false" \
-    blacklabelops/nginx
-~~~~
-
-> Bitbucket will be available at https://192.168.99.100.
-
-# Vagrant
-
-First install:
-
-* [Vagrant](https://www.vagrantup.com/)
-* [Virtualbox](https://www.virtualbox.org/)
-
-Vagrant is fabulous tool for pulling and spinning up virtual machines like docker with containers. I can configure my development and test environment and simply pull it online. And so can you! Install Vagrant and Virtualbox and spin it up. Change into the project folder and build the project on the spot!
-
-~~~~
-$ vagrant up
-$ vagrant ssh
-[vagrant@localhost ~]$ cd /vagrant
-[vagrant@localhost ~]$ docker-compose up
-~~~~
-
-> Bitbucket will be available on http://localhost:8080 on the host machine.
-
-# Bitbucket SSO With Crowd
-
-You enable Single Sign On with Atlassian Crowd. What is crowd?
-
-"Users can come from anywhere: Active Directory, LDAP, Crowd itself, or any mix thereof. Control permissions to all your applications in one place – Atlassian, Subversion, Google Apps, or your own apps." - [Atlassian Crowd](https://www.atlassian.com/software/crowd/overview)
-
-This is controlled by the environment variable `BITBUCKET_CROWD_SSO`. Possible values:
-
-* `true`: Bitbucket configuration will be set to Crowd SSO authentication class at every restart.
-* `false`: Bitbucket configuration will be set to Bitbucket Authentication class at every restart.
-
-Example:
-
-~~~~
-$ docker run -d -p 7990:7990 -v your-local-folder-or-volume:/var/atlassian/bitbucket \
-    -e "BITBUCKET_CROWD_SSO=true" \
-    --name bitbucket blacklabelops/bitbucket
-~~~~
-
- > SSO will be activated, you will need Crowd in order to authenticate.
-
-# Support
-
-Leave a message and ask questions on Hipchat: [blacklabelops/hipchat](https://www.hipchat.com/gEorzhvnI)
 
 # References
 
