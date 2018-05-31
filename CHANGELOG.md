@@ -1,4 +1,4 @@
-## 5.11.0
+## 5.11.1
 https://confluence.atlassian.com/bitbucketserver/bitbucket-server-5-11-release-notes-950274914.html
 
 ## 5.10.0
