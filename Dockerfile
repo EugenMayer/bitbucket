@@ -1,4 +1,4 @@
-FROM blacklabelops/java:openjre.8
+FROM eugenmayer/java
 
 ARG RELEASE_VERSION=5.11.1
 # permissions
