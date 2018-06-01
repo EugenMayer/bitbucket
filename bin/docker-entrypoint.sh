@@ -85,7 +85,7 @@ if [ -d /var/atlassian/bitbucket/ssh ]; then
 fi
 
 if [ "$1" = 'bitbucket' ] || [ "${1:0:1}" = '-' ]; then
-  source /usr/bin/dockerwait
+  #source /usr/bin/dockerwait
   umask 0027
   if [ "${bitbucket_embedded_search}" = 'true' ]; then
     exec ${BITBUCKET_INSTALL}/bin/start-bitbucket.sh -fg

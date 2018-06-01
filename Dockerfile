@@ -24,6 +24,9 @@ RUN export MYSQL_DRIVER_VERSION=5.1.44 && \
             -s /bin/bash \
             -S $CONTAINER_USER &&  \
     apk add --update \
+      tini \
+      bash \
+      su-exec \
       ca-certificates \
       gzip \
       curl \
@@ -34,6 +37,8 @@ RUN export MYSQL_DRIVER_VERSION=5.1.44 && \
       wget  \
       ttf-dejavu \
       git-daemon && \
+    echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
+    curl https://raw.githubusercontent.com/vishnubob/wait-for-it/55c54a5abdfb32637b563b28cc088314b162195e/wait-for-it.sh -o /usr/bin/wait-for-it && \
     # Install xmlstarlet
     export XMLSTARLET_VERSION=1.6.1-r1              &&  \
     wget --directory-prefix=/tmp https://github.com/menski/alpine-pkg-xmlstarlet/releases/download/${XMLSTARLET_VERSION}/xmlstarlet-${XMLSTARLET_VERSION}.apk && \
