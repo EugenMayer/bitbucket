@@ -1,3 +1,6 @@
+## 5.16.0
+https://confluence.atlassian.com/bitbucketserver/bitbucket-server-5-16-release-notes-959283704.html
+
 ## 5.15.0
 https://confluence.atlassian.com/bitbucketserver/bitbucket-server-5-15-release-notes-957974678.html
 
