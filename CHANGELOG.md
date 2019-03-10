@@ -1,3 +1,6 @@
+## 6.1.0
+https://confluence.atlassian.com/bitbucketserver/bitbucket-server-6-1-release-notes-966687591.html
+
 ## 6.0.0
 https://confluence.atlassian.com/bitbucketserver/bitbucket-server-6-0-release-notes-966659875.html
 https://confluence.atlassian.com/bitbucketserver/bitbucket-server-upgrade-guide-776640551.html
