@@ -1,3 +1,6 @@
+## 6.8.0
+https://confluence.atlassian.com/display/BitbucketServer/Bitbucket+Server+6.8+release+notes
+
 ## 6.7.2
 https://confluence.atlassian.com/bitbucketserver/bitbucket-server-6-7-release-notes-976757805.html
 
