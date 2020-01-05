@@ -14,7 +14,7 @@ ENV BITBUCKET_HOME=/var/atlassian/bitbucket \
     BITBUCKET_BACKUP_CLIENT_HOME=/opt/backupclient \
     BITBUCKET_BACKUP_CLIENT_VERSION=300300300
 
-RUN export MYSQL_DRIVER_VERSION=5.1.44 && \
+RUN export MYSQL_DRIVER_VERSION=5.1.48 && \
     export CONTAINER_USER=bitbucket &&  \
     export CONTAINER_GROUP=bitbucket &&  \
     addgroup -g $CONTAINER_GID $CONTAINER_GROUP &&  \

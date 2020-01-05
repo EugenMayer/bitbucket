@@ -4,9 +4,7 @@ services:
   bitbucket:
     image: eugenmayer/bitbucket
     depends_on:
-      - postgres_bitbucket
-    networks:
-      - bitbucketnet
+      - db
     volumes:
       - bitbucketdata:/var/atlassian/bitbucket
     ports:
@@ -16,13 +14,11 @@ services:
       - 'BITBUCKET_PROXY_PORT='
       - 'BITBUCKET_PROXY_SCHEME='
       - 'BITBUCKET_DELAYED_START='
-      - 'DOCKER_WAIT_HOST=postgres_bitbucket'
+      - 'DOCKER_WAIT_HOST=db'
       - 'DOCKER_WAIT_PORT=5432'
 
-  postgres_bitbucket:
-    image: blacklabelops/postgres
-    networks:
-      - bitbucketnet
+  db:
+    image: postgres:11
     volumes:
       - postgresqldata:/var/lib/postgresql/data
     environment:
@@ -37,7 +33,3 @@ volumes:
     external: false
   postgresqldata:
     external: false
-
-networks:
-  bitbucketnet:
-    driver: bridge

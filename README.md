@@ -2,7 +2,6 @@
 
 This project is build by concourse.ci, see [our oss pipelines here](https://github.com/EugenMayer/concourse-our-open-pipelines)
 
-
 ## Supported tags and respective Dockerfile links
 
 | Product |Version | Tags  | Dockerfile |
@@ -37,34 +36,13 @@ docker-compose up
 
 Firstly, start the database server for Bitbucket:
 
-> Note: Change Password!
-
-~~~~
-$ docker run --name postgres_bitbucket -d \
-    -e 'POSTGRES_DB=bitbucketdb' \
-    -e 'POSTGRES_USER=bitbucketdb' \
-    -e 'POSTGRES_PASSWORD=jellyfish' \
-    -e 'POSTGRES_ENCODING=UTF8' \
-    blacklabelops/postgres
-~~~~
-
-Secondly, start Bitbucket:
-
-~~~~
-$ docker run -d --name bitbucket \
-	  --link postgres_bitbucket:postgres_bitbucket \
-	  -p 7990:7990 blacklabelops/bitbucket
-~~~~
-
->  Starts Bitbucket and links it to the postgresql instances. JDBC URL: jdbc:postgresql://postgres_bitbucket/bitbucketdb
-
 Thirdly, configure your Bitbucket yourself and fill it with a test license.
 
 Point your browser to http://yourdockerhost:7990
 
 1. Choose `External` for `Database` and fill out the form:
   * Database Type: `PostgreSQL`
-  * Hostname: `postgres_bitbucket`
+  * Hostname: `db`
   * Port: `5432`
   * Database name: `bitbucketdb`
   * Database username: `bitbucketdb`
