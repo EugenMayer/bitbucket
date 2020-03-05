@@ -75,13 +75,6 @@ RUN export MYSQL_DRIVER_VERSION=5.1.48 && \
     chown -R bitbucket:bitbucket ${BITBUCKET_HOME} && \
     chown -R bitbucket:bitbucket ${BITBUCKET_INSTALL}
 
-RUN mkdir -p ${BITBUCKET_BACKUP_CLIENT_HOME} && \
-    wget -O /tmp/bitbucket-backup-distribution.zip \
-      https://marketplace.atlassian.com/download/plugins/com.atlassian.stash.backup.client/version/${BITBUCKET_BACKUP_CLIENT_VERSION} && \
-    unzip -d ${BITBUCKET_BACKUP_CLIENT_HOME} /tmp/bitbucket-backup-distribution.zip && \
-    mv /opt/backupclient/$(ls /opt/backupclient/) /opt/backupclient/bitbucket-backup-client && \
-    chown -R bitbucket:bitbucket ${BITBUCKET_BACKUP_CLIENT_HOME}
-
 # Remove obsolete packages
 RUN apk del \
       ca-certificates \
